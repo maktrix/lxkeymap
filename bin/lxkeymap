@@ -393,6 +393,13 @@ class LxkeymapWindow(gtk.Window):
         configreg.foreach_country(self.return_layout)
         self.treeview_variant.show()
 
+        self.model_variant = self.treeview_variant.get_model()
+        self.selection_variant = self.treeview_variant.get_selection()
+        self.default_path = None
+        self.model_variant.foreach(self.return_path, self.variant_saved[-1])
+        self.selection_variant.select_path(self.default_path)
+        self.treeview_variant.scroll_to_cell(self.default_path, None, False, 0.0, 0.0)
+
     def on_removebtn_clicked(self,widget, data=None):
         model = self.treeview_profiles.get_model()
         selection = self.treeview_profiles.get_selection()
@@ -570,9 +577,11 @@ class LxkeymapWindow(gtk.Window):
         self.variant_current = self.variant_saved
         self.save_configuration()
         self.loadFromConfig()
+        self.country_selected = self.layout_saved[-1].upper()
         self.model_layout.foreach(self.return_path, self.layout_saved[-1])
         self.selection_layout.select_path(self.default_path)
         self.treeview_layout.scroll_to_cell(self.default_path, None, False, 0.0, 0.0)
+        self.generate_variant_list()
 
     def status_update(self):
         """Update the Statusbar"""
