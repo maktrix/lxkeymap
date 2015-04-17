@@ -143,6 +143,8 @@ class LxkeymapWindow(gtk.Window):
 
         self.layout_current = server.get_layouts()#[active_group] # We handle now multiple layouts
         self.variant_current = server.get_variants()#[active_group]
+        if self.variant_current == []:
+            self.variant_current = ['']
 
         # Get options here
         self.options_current = server.get_options()
@@ -372,7 +374,10 @@ class LxkeymapWindow(gtk.Window):
         c_reg.foreach_option(item.get_name(), self.print_option,parent_group)
 
     def construct_country(self, c_reg, item):
-        self.country_list.append((item.get_description(), item.get_name()))
+        filename = item.get_name()
+        filepath = "/usr/share/X11/xkb/symbols/" + filename.lower()
+        if (os.path.exists(filepath)):
+            self.country_list.append((item.get_description(), item.get_name()))
 
     #def return_path (self, model, path, iter, data):
     #    if model.get_value(iter, 1).lower() == self.layout_saved[-1]:
@@ -449,6 +454,7 @@ class LxkeymapWindow(gtk.Window):
         self.country_selected = model.get_value(iter, 1)
         self.layout_current = [model.get_value(iter, 1).lower()]
         self.generate_variant_list()
+        self.variant_current = ['']
 
     def on_profiles_activate(self,widget):
         if self.profileVbox.get_visible() == True:
@@ -492,8 +498,7 @@ class LxkeymapWindow(gtk.Window):
         except: 
             pass
         try:
-            self.config.set(self.section, 'Layout',
-                            self.country_selected.lower())
+            self.config.set(self.section, 'Layout', self.layout_current[-1])
         except AttributeError:
             config = ConfigParser.RawConfigParser()
             config.read(homedir+'/.config/lxkeymap.cfg')
@@ -516,16 +521,11 @@ class LxkeymapWindow(gtk.Window):
         try:
             bus = dbus.SessionBus()
             session_service = bus.get_object('org.lxde.SessionManager', '/org/lxde/SessionManager')
-            session_mode = session_service.get_dbus_method('KeymapMode', 'org.lxde.SessionManager')
-            session_mode('user')
-            session_layout= session_service.get_dbus_method('KeymapLayout', 'org.lxde.SessionManager')
-            session_layout(self.layout_current[0])
-            if self.variant_current[0]:
-                session_variant = session_service.get_dbus_method('KeymapVariant', 'org.lxde.SessionManager')
-                session_variant(self.variant_current[0])
-            if self.option_current[0]:
-                session_option = session_service.get_dbus_method('KeymapOption', 'org.lxde.SessionManager')
-                session_option(self.option_current[0])
+            session_method = session_service.get_dbus_method('KeymapSet', 'org.lxde.SessionManager')
+            session_method ('mode', '', 'user')
+            session_method ('layout', '', self.layout_current[0])
+            session_method ('variant', '', self.variant_current[0])
+            session_method ('options', '', self.options_current[0])
         except:
             print ("Unable to save to lxsession")
 
@@ -569,6 +569,10 @@ class LxkeymapWindow(gtk.Window):
         self.layout_current = self.layout_saved
         self.variant_current = self.variant_saved
         self.save_configuration()
+        self.loadFromConfig()
+        self.model_layout.foreach(self.return_path, self.layout_saved[-1])
+        self.selection_layout.select_path(self.default_path)
+        self.treeview_layout.scroll_to_cell(self.default_path, None, False, 0.0, 0.0)
 
     def status_update(self):
         """Update the Statusbar"""
