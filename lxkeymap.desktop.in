@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Lxkeymap
+Comment=Lxkeymap application
+Categories=Settings;
+Exec=lxkeymap
+Icon=lxkeymap
+Terminal=false
+Type=Application

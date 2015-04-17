@@ -1,0 +1,8 @@
+debian/python-module-stampdir
+debian/lxkeymap
+debian/files
+debian/lxkeymap.debhelper.log
+debian/lxkeymap.postinst.debhelper
+debian/lxkeymap.prerm.debhelper
+debian/lxkeymap.substvars
+build
