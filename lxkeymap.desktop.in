@@ -3,6 +3,6 @@ Name=Lxkeymap
 Comment=Lxkeymap application
 Categories=Settings;
 Exec=lxkeymap
-Icon=lxkeymap
+Icon=/usr/local/share/lxkeymap/media/icon.png
 Terminal=false
 Type=Application

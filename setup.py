@@ -75,8 +75,8 @@ def update_desktop_file(datadir):
 
 class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
     def run(self):
-        previous_value = update_data_path(self.prefix + '/share/lxkeymap/')
-        update_desktop_file(self.prefix + '/share/lxkeymap/')
+        previous_value = update_data_path(self.prefix + '/local/share/lxkeymap/')
+        update_desktop_file(self.prefix + '/local/share/lxkeymap/')
         DistUtilsExtra.auto.install_auto.run(self)
         update_data_path(self.prefix, previous_value)
 
