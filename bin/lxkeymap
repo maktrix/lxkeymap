@@ -213,8 +213,10 @@ class LxkeymapWindow(gtk.Window):
         self.model_layout.foreach(self.return_path, self.layout_saved[-1])
         self.selection_layout.select_path(self.default_path)
         self.treeview_layout.scroll_to_cell(self.default_path, None, False, 0.0, 0.0)
+        (self.model_layout, iter) = self.selection_layout.get_selected()
+        self.country_selected = self.model_layout.get_value(iter, 1)
 
-        self.treeview_layout.connect("realize", self.on_country_click)
+        #self.treeview_layout.connect("realize", self.on_country_click)
         self.treeview_layout.connect("cursor-changed", self.on_country_click)
 
         self.scrolledwindow_layout = builder.get_object("scrolledwindow_layout")
@@ -231,6 +233,9 @@ class LxkeymapWindow(gtk.Window):
         self.tvcolumn_variant.pack_start(self.cell_variant, True)
         self.tvcolumn_variant.add_attribute(self.cell_variant, "text", 0)
 
+        self.generate_variant_list()
+        self.show_variant()
+
         self.scrolledwindow_variant = builder.get_object("scrolledwindow_variant")
 
         self.treeview_variant.connect("cursor-changed", self.on_variant_click)
@@ -238,11 +243,11 @@ class LxkeymapWindow(gtk.Window):
         self.scrolledwindow_variant.add(self.treeview_variant)
         self.treeview_variant.show()
 
-        self.button_apply = builder.get_object("button_apply")
-        self.button_apply.connect("clicked", self.on_click_apply)
+        self.button_ok = builder.get_object("button_ok")
+        self.button_ok.connect("clicked", self.on_click_ok)
 
-        self.button_restore = builder.get_object("button_restore")
-        self.button_restore.connect("clicked", self.on_click_restore)
+        self.button_cancel = builder.get_object("button_cancel")
+        self.button_cancel.connect("clicked", self.on_click_cancel)
 
         # Show profiles as default configuration if there exists more than one section
         self.profileVbox = builder.get_object("profileVbox")
@@ -393,13 +398,6 @@ class LxkeymapWindow(gtk.Window):
         configreg.foreach_country(self.return_layout)
         self.treeview_variant.show()
 
-        self.model_variant = self.treeview_variant.get_model()
-        self.selection_variant = self.treeview_variant.get_selection()
-        self.default_path = None
-        self.model_variant.foreach(self.return_path, self.variant_saved[-1])
-        self.selection_variant.select_path(self.default_path)
-        self.treeview_variant.scroll_to_cell(self.default_path, None, False, 0.0, 0.0)
-
     def on_removebtn_clicked(self,widget, data=None):
         model = self.treeview_profiles.get_model()
         selection = self.treeview_profiles.get_selection()
@@ -462,6 +460,11 @@ class LxkeymapWindow(gtk.Window):
         self.layout_current = [model.get_value(iter, 1).lower()]
         self.generate_variant_list()
         self.variant_current = ['']
+        self.show_variant()
+        self.save_configuration()
+        # Apply changes here
+        self.loadFromConfig()
+
 
     def on_profiles_activate(self,widget):
         if self.profileVbox.get_visible() == True:
@@ -496,7 +499,9 @@ class LxkeymapWindow(gtk.Window):
         selection = self.treeview_variant.get_selection()
         (model, iter) = selection.get_selected()
         self.variant_current =  [model.get_value(iter, 1)]
-        print self.variant_current
+        self.save_configuration()
+        # Apply changes here
+        self.loadFromConfig()
 
     def save_configuration(self):
         # Set autostart entry for restoration of keyboard layout
@@ -553,7 +558,7 @@ class LxkeymapWindow(gtk.Window):
         self.layout_current = layout_saved
         self.variant_current = variant_saved
         self.options_current = options_saved
-        print self.options_current
+        # print self.options_current
         print "Lxkeymap autostart running..."
         display = gtk.gdk.display_get_default()
         engine = xklavier.Engine(display)
@@ -582,6 +587,25 @@ class LxkeymapWindow(gtk.Window):
         self.selection_layout.select_path(self.default_path)
         self.treeview_layout.scroll_to_cell(self.default_path, None, False, 0.0, 0.0)
         self.generate_variant_list()
+        self.show_variant ()
+
+    def show_variant (self):
+        self.model_variant = self.treeview_variant.get_model()
+        self.selection_variant = self.treeview_variant.get_selection()
+        self.default_path = None
+        self.model_variant.foreach(self.return_path, self.variant_current[-1])
+        self.selection_variant.select_path(self.default_path)
+        self.treeview_variant.scroll_to_cell(self.default_path, None, False, 0.0, 0.0)
+
+    def on_click_cancel(self, data=None):
+        self.layout_current = self.layout_saved
+        self.variant_current = self.variant_saved
+        self.save_configuration()
+        self.loadFromConfig()
+        gtk.main_quit()
+
+    def on_click_ok(self, data=None):
+        gtk.main_quit()
 
     def status_update(self):
         """Update the Statusbar"""
