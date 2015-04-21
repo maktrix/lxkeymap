@@ -27,7 +27,7 @@ __all__ = [
 
 # Where your project will look for your data (for instance, images and ui
 # files). By default, this is ../data, relative your trunk layout
-__lxkeymap_data_directory__ = '../data/'
+__lxkeymap_data_directory__ = '/usr/local/share/lxkeymap/'
 __license__ = 'GPL-3'
 
 import os
