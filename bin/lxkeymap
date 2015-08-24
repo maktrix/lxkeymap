@@ -236,7 +236,10 @@ class LxkeymapWindow(gtk.Window):
         self.tvcolumn_variant.pack_start(self.cell_variant, True)
         self.tvcolumn_variant.add_attribute(self.cell_variant, "text", 0)
 
-        self.generate_variant_list()
+        self.treeview_variant.hide()
+        self.treestore_variant.clear()
+        configreg.foreach_country(self.return_layout)
+        self.treeview_variant.show()
         self.show_variant()
 
         self.scrolledwindow_variant = builder.get_object("scrolledwindow_variant")
