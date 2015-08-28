@@ -286,7 +286,9 @@ class LxkeymapWindow(gtk.Window):
     def init_config_parser(self):
         """Initialize configuration"""
         self.config = ConfigParser.RawConfigParser()
+        self.nofile = False
         if not os.path.exists(homedir+'/.config/lxkeymap.cfg'): 
+            self.nofile = True
             self.config.add_section('Global')
             try:
                 self.config.set('Global', 'Layout', self.layout_current[0])
@@ -608,6 +610,8 @@ class LxkeymapWindow(gtk.Window):
         self.variant_current = self.variant_saved
         self.save_configuration()
         self.loadFromConfig()
+        if self.nofile == True:
+          os.remove (homedir+'/.config/lxkeymap.cfg')
         gtk.main_quit()
 
     def on_click_ok(self, data=None):
