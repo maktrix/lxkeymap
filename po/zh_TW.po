@@ -1,0 +1,110 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Jeff Huang <s8321414@gmail.com>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-16 21:43+0000\n"
+"PO-Revision-Date: 2015-10-15 09:19+0800\n"
+"Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
+"Language-Team: chinese-l10n <chinese-l10n@googlegroups.com>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: ../data/ui/LxkeymapWindow.ui.h:1
+msgid "Lxkeymap"
+msgstr "Lxkeymap"
+
+#: ../data/ui/LxkeymapWindow.ui.h:2
+msgid "Variant"
+msgstr "變種"
+
+#: ../data/ui/LxkeymapWindow.ui.h:3
+msgid "Activate Nodeadkeys"
+msgstr "啟動 Nodeadkeys"
+
+#: ../data/ui/LxkeymapWindow.ui.h:4
+msgid "Nodeadkeys"
+msgstr "Nodeadkeys"
+
+#: ../data/ui/LxkeymapWindow.ui.h:5
+msgid "Show all"
+msgstr "顯示全部"
+
+#: ../data/ui/LxkeymapWindow.ui.h:6
+msgid "Tools"
+msgstr "工具"
+
+#: ../data/ui/LxkeymapWindow.ui.h:7
+msgid "Show/Hide profiles"
+msgstr "顯示／隱藏設定檔"
+
+#: ../data/ui/LxkeymapWindow.ui.h:8
+msgid "_Help"
+msgstr "說明(_H)"
+
+#: ../data/ui/LxkeymapWindow.ui.h:9
+msgid "Options"
+msgstr "選項"
+
+#. TODO: if entry == type in here to test delete text. Maybe labelledentry would do better here instead of this.
+#: ../data/ui/LxkeymapWindow.ui.h:10 ../bin/lxkeymap.py:631
+msgid "Type here to test your keyboard"
+msgstr "在這裡輸入以測試您的鍵盤"
+
+#: ../data/ui/LxkeymapWindow.ui.h:11
+msgid "Status Area"
+msgstr "狀態區"
+
+#: ../bin/lxkeymap.py:266
+#, python-format
+msgid "Current Keymap: %s(%s) (Multiple Keymaps)"
+msgstr "目前的鍵盤映射：%s(%s) （多重鍵盤映射）"
+
+#: ../bin/lxkeymap.py:268
+#, python-format
+msgid "Current Keymap: %s(%s)"
+msgstr "目前的鍵盤映射：%s(%s)"
+
+#: ../bin/lxkeymap.py:271
+#, python-format
+msgid "Current Keymap: %s (Multiple Keymaps)"
+msgstr "目前的鍵盤映射：%s （多重鍵盤映射）"
+
+#: ../bin/lxkeymap.py:273
+#, python-format
+msgid "Current Keymap: %s"
+msgstr "目前的鍵盤映射：%s"
+
+#: ../bin/lxkeymap.py:308
+msgid "Keyboard Options"
+msgstr "鍵盤選項"
+
+#. print layout  # DEBUG
+#. print variant
+#: ../bin/lxkeymap.py:589 ../bin/lxkeymap.py:591
+msgid "Current Keymap: "
+msgstr "目前的鍵盤映射： "
+
+#: ../bin/lxkeymap.py:657
+msgid "show debug messages"
+msgstr "顯示除錯訊息"
+
+#: ../data/ui/PreferencesLxkeymapDialog.ui.h:1
+msgid "Multiple Layouts"
+msgstr "多重佈局"
+
+#: ../data/ui/PreferencesLxkeymapDialog.ui.h:2
+msgid "Grp Switch:"
+msgstr "Grp 切換："
+
+#: ../data/ui/PreferencesLxkeymapDialog.ui.h:3
+msgid "Test:"
+msgstr "測試："
+
