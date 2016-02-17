@@ -397,7 +397,7 @@ class LxkeymapWindow(gtk.Window):
     #        self.default_path = path
 
     def return_path(self,model,path,iter,matched_text):
-        if model.get_value(iter, 1).lower() == matched_text:
+        if model.get_value(iter, 1).lower() == matched_text.lower():
             self.default_path = path
 
     def generate_variant_list(self):
